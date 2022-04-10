@@ -1,20 +1,12 @@
 import { SnakeElement } from './SnakeElement.js';
-
-const game = document.querySelector('#game');
-const ctx = game.getContext('2d');
+import { context as ctx, box } from './variables.js';
 
 const ground = new Image();
 ground.src = './img/background.png';
 
-/** The Snake's minimum step and cell size. */
-const box = 32;
-
 /** The number of cells vertically and horizontally. */
 const width = Math.trunc(game.width / box) - 2;
 const height = Math.trunc(game.height / box) - 4;
-
-/** Initial cell's vertical offset, */
-const offsetV = 2;
 
 /** Initial Snake's speed, */
 let gameSpeed = 500;
@@ -27,7 +19,7 @@ let score = 0;
 
 /** The Snake class. */
 function Snake() {
-  this.head = new SnakeElement(9, 8);
+  this.head = new SnakeElement(9, 8, 'green');
   this.body = [];
   this.direction = { h: 0, v: -1 };
 
@@ -35,12 +27,10 @@ function Snake() {
    * Draws The Snake in the Canvas.
    */
   this.draw = function () {
-    ctx.fillStyle = 'green';
-    ctx.fillRect(this.head.x * box, (this.head.y + offsetV) * box, box, box);
+    this.head.draw();
 
-    ctx.fillStyle = 'red';
     for (const elem of this.body) {
-      ctx.fillRect(elem.x * box, (elem.y + offsetV) * box, box, box);
+      elem.draw();
     }
   };
 
@@ -119,7 +109,7 @@ function Snake() {
       y = this.head.y;
     }
 
-    this.body.push(new SnakeElement(x, y));
+    this.body.push(new SnakeElement(x, y, 'red'));
   };
 
   /**
