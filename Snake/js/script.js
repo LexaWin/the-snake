@@ -37,32 +37,32 @@ function SnakeElement(x = 0, y = 0) {
 function Snake() {
   this.head = new SnakeElement(9, 8);
   this.body = [];
-  this.direction = {h: 0, v: -1};
+  this.direction = { h: 0, v: -1 };
 
-  /** 
+  /**
    * Draws The Snake in the Canvas.
    */
-  this.draw = function() {
+  this.draw = function () {
     ctx.fillStyle = 'green';
     ctx.fillRect(this.head.x * box, (this.head.y + offsetV) * box, box, box);
-    
+
     ctx.fillStyle = 'red';
     for (const elem of this.body) {
       ctx.fillRect(elem.x * box, (elem.y + offsetV) * box, box, box);
     }
   };
 
-  /** 
+  /**
    * Makes The Snake move.
    * The Snake moves from tail to head.
    */
-  this.move = function() {
+  this.move = function () {
     if (this.body.length) {
       for (let i = this.body.length - 1; i > 0; i--) {
         this.body[i].x = this.body[i - 1].x;
         this.body[i].y = this.body[i - 1].y;
       }
-  
+
       this.body[0].x = this.head.x;
       this.body[0].y = this.head.y;
     }
@@ -76,11 +76,11 @@ function Snake() {
     if (this.head.y > height) this.head.y = 1;
   };
 
-  /** 
+  /**
    * Changes the direction of The Snake.
    */
-  this.changeDirection = function(event) {
-    switch(event.code) {
+  this.changeDirection = function (event) {
+    switch (event.code) {
       case 'ArrowUp':
         if (Math.abs(this.direction.v) != 1) {
           this.direction.v = -1;
@@ -115,18 +115,18 @@ function Snake() {
   /**
    * Makes The Snake grow.
    */
-  this.grow = function() {
+  this.grow = function () {
     let x;
     let y;
 
     if (this.body.length) {
       x = this.body[this.body.length - 1].x;
-      y = this.body[this.body.length - 1].y;     
+      y = this.body[this.body.length - 1].y;
     } else {
       x = this.head.x;
       y = this.head.y;
     }
-    
+
     this.body.push(new SnakeElement(x, y));
   };
 
@@ -134,7 +134,7 @@ function Snake() {
    * Makes The Snake eat.
    * When The Snake eats, it grows.
    */
-   this.eat = function() {
+  this.eat = function () {
     this.grow();
   };
 
@@ -143,35 +143,45 @@ function Snake() {
    * @param {!Food} food Food object.
    * @return {boolean} True - The Snake is on the food. False - not.
    */
-  this.gotFood = function(food) {
+  this.gotFood = function (food) {
     return this.head.x == food.x && this.head.y == food.y;
-  }
+  };
 
   /**
    * Checks whether The Snake has crashed into itself.
    * @returns {boolean} True - The Snake has crashed into itself. False - not.
    */
-  this.crash = function() {
-    return this.body.some(elem => elem.x == this.head.x && elem.y == this.head.y);
-  }
+  this.crash = function () {
+    return this.body.some(
+      (elem) => elem.x == this.head.x && elem.y == this.head.y
+    );
+  };
 
   /**
    * Checks whether The Snake occupies a particular cell.
-   * @param {number} x X coord of the cell. 
+   * @param {number} x X coord of the cell.
    * @param {number} y Y coord of the cell.
    * @returns {boolean} True - The Snake occupies this cell. False - not.
    */
-  this.occupiesCell = function(x, y) {
-    return this.body.some(elem => elem.x == x && elem.y == y) ||
-           this.head.x == x && this.head.y == y;
-  }
+  this.occupiesCell = function (x, y) {
+    return (
+      this.body.some((elem) => elem.x == x && elem.y == y) ||
+      (this.head.x == x && this.head.y == y)
+    );
+  };
 }
 
 /** The Food class. */
 function Food() {
   // Defining food image. Randomly.
   const foodImages = [
-    'apple', 'donat', 'pizza', 'cheese', 'banana', 'cake', 'drink'
+    'apple',
+    'donat',
+    'pizza',
+    'cheese',
+    'banana',
+    'cake',
+    'drink',
   ];
   const index = Math.trunc(Math.random() * foodImages.length);
   const imagePath = `./img/${foodImages[index]}.png`;
@@ -183,7 +193,7 @@ function Food() {
   const freeCells = [];
   for (let x = 1; x <= 17; x++) {
     for (let y = 1; y <= 15; y++) {
-      if (!snake.occupiesCell(x, y)) freeCells.push({x, y});
+      if (!snake.occupiesCell(x, y)) freeCells.push({ x, y });
     }
   }
   const freeCell = freeCells[Math.trunc(Math.random() * freeCells.length)];
@@ -194,9 +204,9 @@ function Food() {
   /**
    * Draws the food in Canvas.
    */
-  this.draw = function() {
+  this.draw = function () {
     ctx.drawImage(this.food, this.x * box, (this.y + 2) * box);
-  }
+  };
 }
 
 /**
@@ -239,13 +249,13 @@ function render() {
     food = new Food();
 
     score++;
-    
+
     // The Snake has grown up. Increase game speed.
     gameSpeed = Math.round(gameSpeed / gameSpeedMultiplier);
 
     clearInterval(gameId);
     gameId = setInterval(render, gameSpeed);
-  }  
+  }
 }
 
 let gameId = setInterval(render, gameSpeed);
