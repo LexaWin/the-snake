@@ -1,3 +1,5 @@
+import { SnakeElement } from './SnakeElement.js';
+
 const game = document.querySelector('#game');
 const ctx = game.getContext('2d');
 
@@ -22,16 +24,6 @@ const gameSpeedMultiplier = 1.02;
 
 /** Game score. */
 let score = 0;
-
-/**
- * The Snake's building block.
- * @param {number=} x Initial x coord of the block.
- * @param {number=} y Initial y coord of the block.
- */
-function SnakeElement(x = 0, y = 0) {
-  this.x = x;
-  this.y = y;
-}
 
 /** The Snake class. */
 function Snake() {
