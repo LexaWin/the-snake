@@ -50,28 +50,24 @@ export class Snake {
         if (Math.abs(this.direction.v) != 1) {
           this.direction.v = -1;
           this.direction.h = 0;
-          render();
         }
         break;
       case 'ArrowDown':
         if (Math.abs(this.direction.v) != 1) {
           this.direction.v = 1;
           this.direction.h = 0;
-          render();
         }
         break;
       case 'ArrowRight':
         if (Math.abs(this.direction.h) != 1) {
           this.direction.h = 1;
           this.direction.v = 0;
-          render();
         }
         break;
       case 'ArrowLeft':
         if (Math.abs(this.direction.h) != 1) {
           this.direction.h = -1;
           this.direction.v = 0;
-          render();
         }
         break;
     }
