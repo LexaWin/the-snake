@@ -1,9 +1,15 @@
 import { SnakeElement } from './SnakeElement.js';
+import { width, height } from './variables.js';
 
 export class Snake {
-  head = new SnakeElement(9, 8, 'green');
-  body = [];
-  direction = { h: 0, v: -1 };
+  constructor() {
+    const startX = Math.round(width / 2);
+    const startY = Math.round(height / 2);
+
+    this.head = new SnakeElement(startX, startY, 'green');
+    this.body = [];
+    this.direction = { h: 0, v: -1 };
+  }
 
   /**
    * Draws The Snake in the Canvas.
