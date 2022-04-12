@@ -4,10 +4,6 @@ import { context as ctx, box } from './variables.js';
 const ground = new Image();
 ground.src = './img/background.png';
 
-/** The number of cells vertically and horizontally. */
-const width = Math.trunc(game.width / box) - 2;
-const height = Math.trunc(game.height / box) - 4;
-
 /** Initial Snake's speed, */
 let gameSpeed = 500;
 
@@ -41,21 +37,16 @@ function Snake() {
   this.move = function () {
     if (this.body.length) {
       for (let i = this.body.length - 1; i > 0; i--) {
-        this.body[i].x = this.body[i - 1].x;
-        this.body[i].y = this.body[i - 1].y;
+        this.body[i].moveTo(this.body[i - 1]);
       }
 
-      this.body[0].x = this.head.x;
-      this.body[0].y = this.head.y;
+      this.body[0].moveTo(this.head);
     }
 
-    this.head.x += this.direction.h;
-    this.head.y += this.direction.v;
-
-    if (this.head.x < 1) this.head.x = width;
-    if (this.head.x > width) this.head.x = 1;
-    if (this.head.y < 1) this.head.y = height;
-    if (this.head.y > height) this.head.y = 1;
+    this.head.moveTo({
+      x: this.head.x + this.direction.h,
+      y: this.head.y + this.direction.v,
+    });
   };
 
   /**
