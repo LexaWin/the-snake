@@ -79,12 +79,11 @@ function renderGameObjects() {
  * MAIN
  */
 function main() {
-  renderGameObjects();
-
   snake.move();
 
   if (snake.crash()) {
     clearInterval(gameId);
+    return;
   }
 
   if (snake.gotFood(food)) {
@@ -100,6 +99,9 @@ function main() {
     clearInterval(gameId);
     gameId = setInterval(main, gameSpeed);
   }
+
+  renderGameObjects();
 }
 
+renderGameObjects();
 let gameId = setInterval(main, gameSpeed);
