@@ -68,17 +68,19 @@ let food = new Food();
 
 document.addEventListener('keydown', snake.changeDirection.bind(snake));
 
+function renderGameObjects() {
+  ctx.drawImage(ground, 0, 0);
+  food.draw();
+  snake.draw();
+  showScore(score);
+}
+
 /**
  * MAIN
  */
 function render() {
-  ctx.drawImage(ground, 0, 0);
+  renderGameObjects();
 
-  food.draw();
-
-  showScore(score);
-
-  snake.draw();
   snake.move();
 
   if (snake.crash()) {
