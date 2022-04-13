@@ -78,7 +78,7 @@ function renderGameObjects() {
 /**
  * MAIN
  */
-function render() {
+function main() {
   renderGameObjects();
 
   snake.move();
@@ -98,8 +98,8 @@ function render() {
     gameSpeed = Math.round(gameSpeed / gameSpeedMultiplier);
 
     clearInterval(gameId);
-    gameId = setInterval(render, gameSpeed);
+    gameId = setInterval(main, gameSpeed);
   }
 }
 
-let gameId = setInterval(render, gameSpeed);
+let gameId = setInterval(main, gameSpeed);
