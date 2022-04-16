@@ -1,4 +1,5 @@
 import { Snake } from './Snake.js';
+import { Food } from './Food.js';
 import { context as ctx, box } from './variables.js';
 
 const ground = new Image();
@@ -13,42 +14,16 @@ const gameSpeedMultiplier = 1.02;
 /** Game score. */
 let score = 0;
 
-/** The Food class. */
-function Food() {
-  // Defining food image. Randomly.
-  const foodImages = [
-    'apple',
-    'donat',
-    'pizza',
-    'cheese',
-    'banana',
-    'cake',
-    'drink',
-  ];
-  const index = Math.trunc(Math.random() * foodImages.length);
-  const imagePath = `./img/${foodImages[index]}.png`;
-
-  this.food = new Image();
-  this.food.src = imagePath;
-
-  // Defining free cell to place our food. Randomly too.
+// Defining free cell to place our food. Randomly too.
+function getFreeCell() {
   const freeCells = [];
   for (let x = 1; x <= 17; x++) {
     for (let y = 1; y <= 15; y++) {
       if (!snake.occupiesCell(x, y)) freeCells.push({ x, y });
     }
   }
-  const freeCell = freeCells[Math.trunc(Math.random() * freeCells.length)];
 
-  this.x = freeCell.x;
-  this.y = freeCell.y;
-
-  /**
-   * Draws the food in Canvas.
-   */
-  this.draw = function () {
-    ctx.drawImage(this.food, this.x * box, (this.y + 2) * box);
-  };
+  return freeCells[Math.trunc(Math.random() * freeCells.length)];
 }
 
 /**
@@ -64,7 +39,7 @@ function showScore(score) {
 /** Generating The Snake. */
 const snake = new Snake();
 /** Generating the food. */
-let food = new Food();
+let food = new Food(getFreeCell());
 
 document.addEventListener('keydown', snake.changeDirection.bind(snake));
 
@@ -89,7 +64,7 @@ function main() {
   if (snake.gotFood(food)) {
     snake.eat();
 
-    food = new Food();
+    food = new Food(getFreeCell());
 
     score++;
 
