@@ -35,10 +35,7 @@ export class Snake {
       this.body[0].moveTo(this.head);
     }
 
-    this.head.moveTo({
-      x: this.head.x + this.direction.h,
-      y: this.head.y + this.direction.v,
-    });
+    this.head.moveInDirection(this.direction);
   }
 
   /**

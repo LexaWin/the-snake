@@ -21,4 +21,8 @@ export class SnakeElement {
     this.x = x;
     this.y = y;
   }
+
+  moveInDirection({ h, v }) {
+    this.moveTo({ x: this.x + h, y: this.y + v });
+  }
 }
